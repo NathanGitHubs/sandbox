@@ -11,6 +11,7 @@ git status
 git add .
 git status
 git commit -m 'initialize repo'
-
-Start development from here
+npm install typescript --save-dev
+npm install ts-node --save-dev
+* please refer to "debugger-setup.png" and put the proper file name you want to debug
 
