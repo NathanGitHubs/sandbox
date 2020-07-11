@@ -1,0 +1,11 @@
+create a typescript project steps:
+1. mkdir project-name
+2. cd project-name
+3. npm init
+4. tsc --init
+5. edit tsconfig.json to edit restrictions
+6. git init
+7. touch .gitignore
+8. open browser go to url: gitignore.io
+9. git status
+10. git add .
