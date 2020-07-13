@@ -11,42 +11,42 @@ intersect = 'string';
 // intersection of singles
 
 // intersection of JSON object
-type A = {
+type AA = {
     name: string
 }
-type B = {
+type BB = {
     age: number
 }
 
-type AB = A & B;
+type AABB = AA & BB;
 
-let ab: AB;
-ab = {
+let aabb: AABB;
+aabb = {
     name: 'tony',
     age: 42
 }
 
 // intersection of function
-type fa = (r: number) => [boolean];
-type fb = (x: number, y: number) => [number];
-type faFB = fa & fb;
+type ffaa = (r: number) => [boolean];
+type ffbb = (x: number, y: number) => [number];
+type ffaaFFBB = ffaa & ffbb;
 
-let fafb: faFB;
-fafb = (): any => {
+let ffaaffbb: ffaaFFBB;
+ffaaffbb = (): any => {
     return [true, 42];
 }
 
-console.log(fafb(1));
-console.log(fafb(1, 2));
+console.log(ffaaffbb(1));
+console.log(ffaaffbb(1, 2));
 // console.log(fafb('hello'));
 //console.log(fafb(1,2,3));
 
 // union of class
-class AClass {
+class AAClass {
     name!: string
 }
 
-class BClass {
+class BBClass {
     age!: number
 
     shout() {
@@ -54,13 +54,13 @@ class BClass {
     }
 }
 
-class CClass {
+class CCClass {
     name!: number
 }
 
-type ABClass = AClass & BClass;
+type AABBClass = AAClass & BBClass;
 
-let abClass: ABClass;
+let aabbClass: AABBClass;
 
 const abJson = {
     name: 'tony',
@@ -69,22 +69,22 @@ const abJson = {
     }
 };
 
-abClass = {
+aabbClass = {
     name: 'tony',
     age: 42,
     shout() {
     }
 };
 
-abClass.shout();
-console.log(typeof abClass);
+aabbClass.shout();
+console.log(typeof aabbClass);
 
-let bClass = new BClass();
+let bClass = new BBClass();
 bClass.age = 42;
-console.log(bClass instanceof AClass);
+console.log(bClass instanceof AAClass);
 
-console.log(abClass instanceof AClass);
-console.log(abClass instanceof BClass);
-console.log(typeof abClass);
+console.log(aabbClass instanceof AAClass);
+console.log(aabbClass instanceof BBClass);
+console.log(typeof aabbClass);
 
 
