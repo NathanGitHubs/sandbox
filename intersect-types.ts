@@ -37,7 +37,7 @@ fafb = (): any => {
 }
 
 console.log(fafb(1));
-console.log(fafb(1,2));
+console.log(fafb(1, 2));
 // console.log(fafb('hello'));
 //console.log(fafb(1,2,3));
 
@@ -48,7 +48,8 @@ class AClass {
 
 class BClass {
     age!: number
-    shout(){
+
+    shout() {
         console.log(`shout ${this.age}`);
     }
 }
@@ -84,6 +85,6 @@ console.log(bClass instanceof AClass);
 
 console.log(abClass instanceof AClass);
 console.log(abClass instanceof BClass);
-console.log(typeof  abClass);
+console.log(typeof abClass);
 
 
