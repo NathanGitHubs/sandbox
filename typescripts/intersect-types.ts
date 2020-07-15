@@ -8,8 +8,15 @@ intersect = 'string';
 //intersect = 42;
 //intersect = false;
 
-// intersection of singles
+type three = number & one;
+let three: three = 42;
+// three = 'foo'; an '&' will become an intersect if one or more are union types/combined types
 
+type four = number & string;
+//let four: four = never; 'never' is not a value of type never
+// let four: four = 42; because nothing is in common between number and string(primitive types) the 'type four' is actually never
+
+// intersection of singles
 // intersection of JSON object
 type AA = {
     name: string
@@ -86,5 +93,6 @@ console.log(bClass instanceof AAClass);
 console.log(aabbClass instanceof AAClass);
 console.log(aabbClass instanceof BBClass);
 console.log(typeof aabbClass);
+
 
 
