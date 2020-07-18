@@ -38,3 +38,19 @@ const godgodgod: IGod = new God();
 godgodgod.name = 'tony';
 
 console.log('god, godgod, godgodgod', god, godgod, godgodgod);
+
+const user1 = {
+    name: 'nathan',
+    address: {
+        address1: '123 Main St.',
+        address2: '',
+        city: 'atlanta',
+        geolocation: {
+            long: 2,
+            lat: 1
+        }
+    }
+}
+
+// @ts-ignore
+console.log('user1:', user1?.address?.geolocation?.log);

@@ -1,7 +1,7 @@
-const age: number = 42;
+const age1: number = 42;
 let foo: string = 'bar';
 
-console.log(foo, age);
+console.log(foo, age1);
 
 // age = 42 not allowed bc of const keyword
 foo = 'quack';
@@ -12,7 +12,7 @@ const person = {
 
 // person = {
 //     name: 'tony'
-// }
+// } not allowed because of const keyword
 
 person.name = 'tony';
 console.log('person (ln#: 18)', person);
