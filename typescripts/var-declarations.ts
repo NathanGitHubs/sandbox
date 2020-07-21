@@ -7,8 +7,8 @@ console.log(foo, age1);
 foo = 'quack';
 
 const person = {
-    name: 'nathan',
-}
+    name: 'nathan'
+};
 
 // person = {
 //     name: 'tony'
@@ -69,7 +69,7 @@ console.log('fourthElement:', fourthElement); // outputs 4
 const object1 = {
     a: 'foo',
     b: 42
-}
+};
 
 let {a: hello, b: world} = object1; // has to have a: and b: because it isn't type declaration but rather property rename
 console.log('hello and world:', hello, world);
@@ -84,5 +84,11 @@ function keepWholeObject(wholeObject: { a: string; b?: number }) {
 
 // keepWholeObject({world: 142, hello: 'bar'}); // not allowed bc property names do not match
 keepWholeObject({b: 142, a: 'bar'}); //order doesnt matter
-keepWholeObject({ a: 'bar'});
+keepWholeObject({a: 'bar'});
 
+const teacher = {
+    name: 'foo',
+    age: 42
+} as const;
+
+// teacher.age = 142;

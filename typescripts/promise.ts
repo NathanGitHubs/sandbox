@@ -1,12 +1,9 @@
-import fetch from 'node-fetch';
-
 function getPizza(): string { // async makes the return type a Promise but the constraint makes the payload of the Promise a type string
     return 'meat lover';
 }
 
 const outcome: string = getPizza();
 console.log('outcome:', outcome);
-
 
 async function getPizzaAsync(isMock: boolean) { // async makes the return type a Promise but the constraint makes the payload of the Promise a type string
     if (isMock) {
@@ -21,7 +18,7 @@ async function getPizzaAsync(isMock: boolean) { // async makes the return type a
             }
 
             setTimeout(runThis, 2458);
-        }
+        };
         return new Promise(lambda);
     } else {
         const url = 'http://www.google.com';
