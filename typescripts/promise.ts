@@ -54,3 +54,82 @@ function doNothingOldWay() {
 const o = doNothing();
 doNothingOldWay();
 console.log('program finished:', o);
+
+// advanced promise/combined promises
+type resolveType = (value?: (PromiseLike<number> | number)) => void;
+type rejectType = (reason?: any) => void;
+type outcomeType = Promise<number> | number | void;
+type successType = ((payload: unknown) => unknown | PromiseLike<unknown>) | undefined | null;
+type successesType = ((payloads: unknown[]) => unknown | PromiseLike<unknown>) | undefined | null;
+type failType = ((reason: any) => void | PromiseLike<void>) | undefined | null;
+type failsType = ((reason: any) => void | PromiseLike<void>) | undefined | null;
+
+const parameter: (resolve: resolveType, reject: rejectType) => void = (resolve: resolveType, reject: rejectType): outcomeType => {
+    resolve || reject;
+    reject(42); // reject
+    // abc(42); // resolve
+};
+let finalResult = 0;
+const promise = new Promise(parameter);
+const success: (payload: any) => any = (payload: any): any => {
+    console.log('payload:', payload);
+    return 6 + payload;
+};
+
+const moreHandling: (payload: any) => any = (payload: any): any => {
+    console.log('payload:', payload);
+    return 4 + payload;
+};
+const lastJob: (payload: any) => any = (payload: any): any => {
+    console.log('payload:', payload);
+    finalResult = finalResult + 1 + payload;
+    console.log(finalResult);
+};
+const limbo: (payload: any) => any = (payload: any): any => {
+    console.log('payload:', payload);
+};
+const finish: () => void = (): void => {
+    console.log('the end');
+};
+
+promise.then(success)
+       .then(moreHandling)
+       .then(lastJob)
+       .then(limbo)
+       .catch(success)
+       .finally(finish);
+
+// promise.then(success).then(moreHandling).then(lastJob).then(limbo).finally(finish);
+// promise.catch(success).catch(moreHandling).catch(lastJob).catch(limbo).finally(finish);
+// function fetchAsync (url, timeout, onData, onError) {
+//
+
+// }
+let fetchAsync = (url: string, timeout: number, onData: resolveType, onError: rejectType): outcomeType | void => {
+    url || timeout || onData || onError;
+    onData(42);
+};
+let fetchPromised = (url: string, timeout: number) => {
+    return new Promise((resolve, reject) => {
+        fetchAsync(url, timeout, resolve, reject);
+    });
+};
+const successes: successesType = (payloads) => {
+    let [foo, bar, baz] = payloads;
+    console.log(`success: foo=${foo} bar=${bar} baz=${baz}`);
+};
+const fails: failsType = (err) => {
+    console.log(`error: ${err}`);
+};
+const sjdafb = (): void => {
+    console.log('hello');
+};
+
+Promise.all([
+    fetchPromised('http://backend/foo.txt', 500),
+    fetchPromised('http://backend/bar.txt', 500),
+    fetchPromised('http://backend/baz.txt', 500)
+])
+       .then(successes)
+       .catch(sjdafb);
+

@@ -71,3 +71,20 @@ console.log(Character.version, Character.random());
 // console.log(Character.version);
 console.log(Dva.version, Dva.random(), dva.health);
 
+/*******************************
+*
+* Computed property name
+* Computed method name
+*
+********************************/
+const quux = (): string => {
+    return 'quux';
+};
+
+let objectA = {
+    foo: 'bar',
+    ['baz' + quux()]: 42
+};
+
+console.log('objectA:', objectA);
+

@@ -51,3 +51,15 @@ for (let entry of weapons.entries()) {
     const [key, val] = entry;
     console.log(key, val);
 }
+
+weapons.forEach((x, y) => {
+    console.log('key:', y, 'value:', x);
+});
+console.log('size:', weapons.size);
+
+weapons.delete(player);
+
+weapons.forEach((x, y) => {
+    console.log('key:', y, 'value:', x);
+});
+console.log('size:', weapons.size);

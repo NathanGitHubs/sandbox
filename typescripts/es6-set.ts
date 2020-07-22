@@ -42,3 +42,31 @@ if (!fourthItem.done) {
     let value4 = fourthItem.value;
     console.log('fourthItem:', value4, fourthItem); //1
 }
+
+let numbers: any[] = [11, 22, 11, 22, 42];
+let numberSet = new Set(numbers);
+for (let value of numberSet.values()) {
+    // insertion order
+    console.log('item.value', value);
+}
+console.log(numberSet);
+const hh = {
+    age: 100
+};
+numberSet.add(hh);
+numberSet.forEach((x) => {
+    console.log('x:', x);
+});
+console.log('size:', numberSet.size);
+
+numberSet.delete(hh);
+numberSet.forEach((x) => {
+    console.log('x:', x);
+});
+console.log('size:', numberSet.size);
+
+numberSet.clear();
+numberSet.forEach((x) => {
+    console.log('x:', x);
+});
+console.log('size:', numberSet.size);
