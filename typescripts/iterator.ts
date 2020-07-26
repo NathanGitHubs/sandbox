@@ -6,24 +6,25 @@ namespace iterators {
 
     type IteratorResult = { done: boolean, value: any };
     type Iterator = { next: () => IteratorResult };
+
     // @ts-ignore
     person[Symbol.iterator] = function (): Iterator {
         const properties: string[] = Object.keys(this);
         let count: number = 0;
         let isDone: boolean = false;
-        const fuckYou: () => { done: boolean, value: any } = (): { done: boolean, value: any } => {
+        const next: () => IteratorResult = (): IteratorResult => {
             if (count >= properties.length) {
                 isDone = true;
             }
-            const temp: string = properties[count++];
+            const propertyName: string = properties[count++];
             // @ts-ignore
-            let value: any = this[temp];
+            let value: any = this[propertyName];
             return {
                 done: isDone,
                 value: value
             };
         };
-        return {next: fuckYou};
+        return {next: next}; // [name of property]: [the arrow function next on ln# 14]
     };
 
     // @ts-ignore
