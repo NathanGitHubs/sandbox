@@ -2,6 +2,10 @@ namespace decoratorClass {
     /* Type for a typescript class */
     type constructor<T = {}> = new (...args: any[]) => T;
 
+    /* Type for a class decorator */
+    type classDecoratorType = (base: constructor) => any;
+
+
     /* ***************************************
      * Use Case 1
      * ************************************* */
@@ -46,14 +50,14 @@ namespace decoratorClass {
      * Use Case 2:
      * ************************************* */
 
-    function Levelable(initialLevel: number): (base: constructor) => any {
+    function Levelable(initialLevel: number): classDecoratorType {
 
         // return function Frozen(fuckYou: any): any {
         //     Object.freeze(fuckYou);
         //     Object.freeze(fuckYou.prototype);
         // };
 
-        const decorator = function /*Frozen*/(base: constructor): any {
+        const decorator: classDecoratorType = function /*Frozen*/(base: constructor): any {
             const result = class _LevelPokemon_ extends base {
                 level: number = initialLevel;
             };
