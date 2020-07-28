@@ -7,7 +7,7 @@ edit tsconfig.json to edit restrictions
 git init
 touch .gitignore
 open browser go to url: gitignore.io
-tsc *.ts -t ES2015
+tsc *.ts -t ES2015 --experimentalDecorators
 git status
 git add .
 git status
