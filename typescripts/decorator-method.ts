@@ -1,11 +1,11 @@
 namespace decoratorMethod {
-    type methodDecoratorType = (target: any, propertyKey: string, descriptor: PropertyDescriptor) => any;
+    type methodDecoratorType = (target: any, methodName: string, descriptor: PropertyDescriptor) => any;
 
     function CheckValidity(): methodDecoratorType {
-        const decorator: methodDecoratorType = (target: any, propertyKey: string, descriptor: PropertyDescriptor): any => {
+        const decorator: methodDecoratorType = (target: any, methodName: string, descriptor: PropertyDescriptor): any => {
             // @ts-ignore
             function extracted() {
-                console.log('inside decorator:', target, propertyKey, descriptor);
+                console.log('inside decorator:', target, methodName, 'descriptor:', descriptor);
 
                 const snack: Snack = new Snack('Doritos');
                 const temp = snack.printSnack('cool ranch');
