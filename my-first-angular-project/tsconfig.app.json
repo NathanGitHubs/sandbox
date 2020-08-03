@@ -6,7 +6,9 @@
     "types": []
   },
   "files": [
-    "src/main.ts",
+    "src/main-writing-our-first-app.ts",
+    "src/main-string-interpolation.ts",
+    "src/main-looping.ts",
     "src/polyfills.ts"
   ],
   "include": [

@@ -15,7 +15,7 @@
           "options": {
             "outputPath": "dist/my-first-angular-project",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "main": "src/main-looping.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
