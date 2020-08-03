@@ -11,6 +11,7 @@
     "src/main-looping.ts",
     "src/main-property-&-event-binding.ts",
     "src/main-domain-model.ts",
+    "src/main-nesting-components-&-inputs.ts",
     "src/polyfills.ts"
   ],
   "include": [
