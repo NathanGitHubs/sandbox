@@ -9,6 +9,7 @@
     "src/main-writing-our-first-app.ts",
     "src/main-string-interpolation.ts",
     "src/main-looping.ts",
+    "src/main-property-&-event-binding.ts",
     "src/polyfills.ts"
   ],
   "include": [
