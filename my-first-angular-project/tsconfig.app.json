@@ -10,6 +10,7 @@
     "src/main-string-interpolation.ts",
     "src/main-looping.ts",
     "src/main-property-&-event-binding.ts",
+    "src/main-domain-model.ts",
     "src/polyfills.ts"
   ],
   "include": [
