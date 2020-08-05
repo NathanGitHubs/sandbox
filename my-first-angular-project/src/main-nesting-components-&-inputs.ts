@@ -39,7 +39,7 @@ class Joke {
 class JokeComponent {
   // @ts-ignore
   @Input('joke') data: Joke;
-  // same as ln#41: @Input() joke
+  // same as ln#41: @Input() joke: Joke;
 }
 
 @Component({

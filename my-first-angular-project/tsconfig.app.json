@@ -3,7 +3,8 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "resolveJsonModule": true
   },
   "files": [
     "src/main-writing-our-first-app.ts",
@@ -12,6 +13,9 @@
     "src/main-property-&-event-binding.ts",
     "src/main-domain-model.ts",
     "src/main-nesting-components-&-inputs.ts",
+    "src/main-user-interaction-&-outputs.ts",
+    "src/main-pokemon-app.ts",
+    "src/main-uber-eats.ts",
     "src/polyfills.ts"
   ],
   "include": [

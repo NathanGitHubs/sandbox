@@ -456,7 +456,7 @@ csx/
 ecf/
 rcf/
 
-# Windows Store app package directories and files
+# Windows Store app-main-user-interaction-&-outputs package directories and files
 AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml

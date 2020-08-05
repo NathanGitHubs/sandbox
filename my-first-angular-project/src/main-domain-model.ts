@@ -1,9 +1,9 @@
+import {Component}              from '@angular/core';
+import {BrowserModule}          from '@angular/platform-browser';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {NgModule}               from '@angular/core';
-import {BrowserModule}          from '@angular/platform-browser';
-import {Component}              from '@angular/core';
 
-class Joke {
+export class Joke {
   public setup: string;
   public punchline: string;
   public hide: boolean;

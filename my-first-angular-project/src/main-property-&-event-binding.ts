@@ -3,6 +3,12 @@ import {NgModule}               from '@angular/core';
 import {BrowserModule}          from '@angular/platform-browser';
 import {Component}              from '@angular/core';
 
+type Joke = {
+  setup: string,
+  punchline: string,
+  hide: boolean
+}
+
 @Component({
   selector: 'joke-list',
   template: `
@@ -14,7 +20,7 @@ import {Component}              from '@angular/core';
   `
 })
 class JokeListComponent {
-  jokes: Object[];
+  jokes: Joke[];
   message: string;
 
   constructor() {
