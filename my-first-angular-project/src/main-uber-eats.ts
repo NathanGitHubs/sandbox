@@ -196,20 +196,48 @@ export type RestaurantMenu = {
   modifier_groups: ModifierGroup[];
 }
 
+export type OrderedItem = Item & {
+  quantity: number;
+}
+
 @Component({
   selector: 'order',
   template: `
-    <p>{{data.title.translations.en_us}} {{dollarSign}}{{data.price_info.price / 100}}</p>
-
+    <p>{{data.quantity}}x {{data.title.translations.en_us}} {{dollarSign}}{{data.price_info.price / 100}} {{"\u00A0"}}
+      <button (click)="increaseQuantity(data)">+</button>
+      {{"\u00A0"}}
+      <button (click)="decreaseQuantity(data)">-</button>
+      {{"\u00A0"}}
+      <button (click)="deleteOrderedItem(data)">Delete</button>
+    </p>
   `
 })
 class OrderComponent {
   // @ts-ignore
-  @Input('orderedItem') data: Item;
+  @Input('orderedItem') data: OrderedItem;
   dollarSign: string;
+  @Output('incrementQuantity') incrementQuantity: EventEmitter<OrderedItem>;
+  @Output('decrementQuantity') decrementQuantity: EventEmitter<OrderedItem>;
+  @Output('removeOrderedItem') removeOrderedItem: EventEmitter<OrderedItem>;
 
   constructor() {
     this.dollarSign = '$';
+    this.incrementQuantity = new EventEmitter<OrderedItem>();
+    this.decrementQuantity = new EventEmitter<OrderedItem>();
+    this.removeOrderedItem = new EventEmitter<OrderedItem>();
+
+  }
+
+  increaseQuantity(item: OrderedItem): void {
+    this.incrementQuantity.emit(item);
+  }
+
+  decreaseQuantity(item: OrderedItem): void {
+    this.decrementQuantity.emit(item);
+  }
+
+  deleteOrderedItem(item: OrderedItem) {
+    this.removeOrderedItem.emit(item);
   }
 }
 
@@ -217,13 +245,46 @@ class OrderComponent {
   selector: 'order-list',
   template: `
     <h1>My Order</h1>
-    <order *ngFor="let item of myItems" [orderedItem]="item"></order>
+    <order *ngFor="let item of mapToArray(myItems)" [orderedItem]="item"
+           (incrementQuantity)="increaseQuantity($event)"
+           (decrementQuantity)="decreaseQuantity($event)"
+           (removeOrderedItem)="deleteOrderedItem($event)"
+    ></order>
   `
 })
 class OrderListComponent {
   // @ts-ignore
-  @Input('myItems') myItems: Item[];
+  @Input('myItems') myItems: Map<string, OrderedItem>;
+  @Output('incrementQuantity') incrementQuantity: EventEmitter<OrderedItem>;
+  @Output('decrementQuantity') decrementQuantity: EventEmitter<OrderedItem>;
+  @Output('removeOrderedItem') removeOrderedItem: EventEmitter<OrderedItem>;
 
+  constructor() {
+    this.incrementQuantity = new EventEmitter<OrderedItem>();
+    this.decrementQuantity = new EventEmitter<OrderedItem>();
+    this.removeOrderedItem = new EventEmitter<OrderedItem>();
+
+  }
+
+  mapToArray(myItems: Map<string, OrderedItem>): OrderedItem[] {
+    const values: OrderedItem[] = Array.from(myItems.values());
+    return values;
+  }
+
+  increaseQuantity(item: OrderedItem) {
+    console.log(item);
+    this.incrementQuantity.emit(item);
+  }
+
+  decreaseQuantity(item: OrderedItem): void {
+    console.log(item);
+    this.decrementQuantity.emit(item);
+  }
+
+  deleteOrderedItem(item: OrderedItem) {
+    console.log(item);
+    this.removeOrderedItem.emit(item);
+  }
 }
 
 /* ***********
@@ -320,21 +381,64 @@ class RestaurantComponent {
   selector: 'orchestrator',
   template: `
     <restaurant></restaurant>
-    <order-list [myItems]="myItems"></order-list>
-    <menus [restaurantMenu] = "restaurantMenu" (itemReceivedFromMenu)="addToOrder($event)"></menus>
+    <order-list [myItems]="myItems"
+                (incrementQuantity)="increaseQuantityFromOrder($event)"
+                (decrementQuantity)="decreaseQuantityFromOrder($event)"
+                (removeOrderedItem)="removeFromOrder($event)"
+    ></order-list>
+    <menus [restaurantMenu]="restaurantMenu" (itemReceivedFromMenu)="addToOrder($event)"></menus>
   `
 })
 class OrchestratorComponent {
   restaurantMenu: RestaurantMenu;
-  myItems: Item[];
+  myItems: Map<string, OrderedItem>;
 
   constructor() {
     // @ts-ignore
     this.restaurantMenu = menus.default;
-    this.myItems = [];
+    this.myItems = new Map<string, OrderedItem>();
   }
-  addToOrder(item: Item){
-    this.myItems.push(item);
+
+  addToOrder(item: Item): void {
+    const orderedItem: OrderedItem = this.myItems.get(item.id)!;
+    if (orderedItem) {
+      orderedItem.quantity++;
+    } else {
+      const newOrderedItem: OrderedItem = {
+        ...item,
+        quantity: 1
+      };
+      this.myItems.set(item.id, newOrderedItem);
+    }
+  }
+
+  removeFromOrder(item: OrderedItem): void {
+    const orderedItem: OrderedItem = this.myItems.get(item.id)!;
+    if (orderedItem) {
+      this.myItems.delete(orderedItem.id);
+    }
+  }
+
+  decreaseQuantityFromOrder(item: OrderedItem): void {
+    const orderedItem: OrderedItem = this.myItems.get(item.id)!;
+    if (orderedItem) {
+      orderedItem.quantity--;
+      if (orderedItem.quantity <= 0) {
+        this.myItems.delete(orderedItem.id);
+      }
+    }
+  }
+
+  increaseQuantityFromOrder(item: OrderedItem): void {
+    const orderedItem: OrderedItem = this.myItems.get(item.id)!;
+    if (orderedItem) {
+      orderedItem.quantity++;
+      if (orderedItem.quantity <= 0) {
+        this.myItems.delete(orderedItem.id);
+      }
+    } else {
+      this.addToOrder(orderedItem);
+    }
   }
 }
 
