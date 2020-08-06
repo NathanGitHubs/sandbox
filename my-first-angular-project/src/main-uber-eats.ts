@@ -317,14 +317,14 @@ class RestaurantComponent {
 }
 
 @Component({
-  selector: 'app',
+  selector: 'orchestrator',
   template: `
     <restaurant></restaurant>
     <order-list [myItems]="myItems"></order-list>
     <menus [restaurantMenu] = "restaurantMenu" (itemReceivedFromMenu)="addToOrder($event)"></menus>
   `
 })
-class AppComponent {
+class OrchestratorComponent {
   restaurantMenu: RestaurantMenu;
   myItems: Item[];
 
@@ -338,16 +338,26 @@ class AppComponent {
   }
 }
 
+@Component({
+  selector: 'app',
+  template: `
+    <orchestrator></orchestrator>
+  `
+})
+class AppComponent {
+}
+
 @NgModule({
   imports: [BrowserModule],
   declarations: [
-    AppComponent,
+    OrchestratorComponent,
     RestaurantComponent,
     MenusComponent,
     MenuItemComponent,
     OrderListComponent,
-    OrderComponent
-  ],
+    OrderComponent,
+    AppComponent
+  ]
   bootstrap: [AppComponent]
 })
 export class AppModule {
