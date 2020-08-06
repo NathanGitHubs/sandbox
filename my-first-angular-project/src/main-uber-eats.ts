@@ -218,19 +218,11 @@ class OrderComponent {
   template: `
     <h1>My Order</h1>
     <order *ngFor="let item of myItems" [orderedItem]="item"></order>
-    <menus (itemReceivedFromMenu)="addItem($event)"></menus>
   `
 })
 class OrderListComponent {
-  myItems: Item[];
-
-  constructor() {
-    this.myItems = [];
-  }
-
-  addItem(item: Item) {
-    this.myItems.push(item);
-  }
+  // @ts-ignore
+  @Input('myItems') myItems: Item[];
 
 }
 
@@ -287,13 +279,9 @@ class MenuItemComponent {
   `
 })
 class MenusComponent {
-  restaurantMenu: RestaurantMenu;
+  // @ts-ignore
+  @Input('restaurantMenu') restaurantMenu: RestaurantMenu;
   @Output(`itemReceivedFromMenu`) emitter: EventEmitter<Item> = new EventEmitter<Item>();
-
-  constructor() {
-    // @ts-ignore
-    this.restaurantMenu = menus.default;
-  }
 
   addItem(item: Item) {
     this.emitter.emit(item);
@@ -332,10 +320,22 @@ class RestaurantComponent {
   selector: 'app',
   template: `
     <restaurant></restaurant>
-    <order-list></order-list>
+    <order-list [myItems]="myItems"></order-list>
+    <menus [restaurantMenu] = "restaurantMenu" (itemReceivedFromMenu)="addToOrder($event)"></menus>
   `
 })
 class AppComponent {
+  restaurantMenu: RestaurantMenu;
+  myItems: Item[];
+
+  constructor() {
+    // @ts-ignore
+    this.restaurantMenu = menus.default;
+    this.myItems = [];
+  }
+  addToOrder(item: Item){
+    this.myItems.push(item);
+  }
 }
 
 @NgModule({
