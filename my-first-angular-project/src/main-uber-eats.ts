@@ -357,7 +357,7 @@ class AppComponent {
     OrderListComponent,
     OrderComponent,
     AppComponent
-  ]
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
