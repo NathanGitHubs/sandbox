@@ -1,7 +1,7 @@
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {Input, NgModule}        from '@angular/core';
-import {BrowserModule}          from '@angular/platform-browser';
-import {Component}              from '@angular/core';
+import {platformBrowserDynamic}                from '@angular/platform-browser-dynamic';
+import {EventEmitter, Input, NgModule, Output} from '@angular/core';
+import {BrowserModule}                         from '@angular/platform-browser';
+import {Component}                             from '@angular/core';
 
 import *  as  restaurant from './uber-eats/restaurant.json';
 import *  as  menus      from './uber-eats/menus.json';
@@ -197,58 +197,115 @@ export type RestaurantMenu = {
 }
 
 @Component({
+  selector: 'order',
+  template: `
+    <p>{{data.title.translations.en_us}} {{dollarSign}}{{data.price_info.price / 100}}</p>
+
+  `
+})
+class OrderComponent {
+  // @ts-ignore
+  @Input('orderedItem') data: Item;
+  dollarSign: string;
+
+  constructor() {
+    this.dollarSign = '$';
+  }
+}
+
+@Component({
+  selector: 'order-list',
+  template: `
+    <h1>My Order</h1>
+    <order *ngFor="let item of myItems" [orderedItem]="item"></order>
+    <menus (itemReceivedFromMenu)="addItem($event)"></menus>
+  `
+})
+class OrderListComponent {
+  myItems: Item[];
+
+  constructor() {
+    this.myItems = [];
+  }
+
+  addItem(item: Item) {
+    this.myItems.push(item);
+  }
+
+}
+
+/* ***********
+ *
+ * Menu Item Component
+ *
+ ************** */
+@Component({
   selector: 'menu-item',
   template: `
     <img [src]="item.image_url" [alt]="item.title.translations.en_us" [ngClass]="checkIfFalsey(item)">
     <p>{{item.title.translations.en_us}} {{dollarSign}}{{item.price_info.price / 100}}</p>
+    <button (click)="addItem(item)">Add to Order</button>
+    <hr/>
   `
 })
 class MenuItemComponent {
   // @ts-ignore
   @Input('menuItem') item: Item;
-  dollarSign: string
+  @Output('itemAdded') emitter: EventEmitter<Item> = new EventEmitter<Item>();
+  dollarSign: string;
 
   constructor() {
     // @ts-ignore
-    this.restaurantMenu = menus.default;
+    this.item = menus.default;
     this.dollarSign = '$';
   }
 
   checkIfFalsey(item: Item): string {
-    if(!item.image_url){
-      return 'invisible'
+    if (!item.image_url) {
+      return 'invisible';
     } else {
       return '';
     }
 
   }
+
+  addItem(item: Item) {
+    this.emitter.emit(item);
+  }
 }
 
-
-
-
-
-
-
-
-
+/* ***********
+ *
+ * Menu Component
+ *
+ ************** */
 @Component({
   selector: 'menus',
   template: `
     <h1>Menu Items</h1>
-    <menu-item *ngFor="let item of restaurantMenu.items" [menuItem]="item"></menu-item>
+    <menu-item *ngFor="let item of restaurantMenu.items" [menuItem]="item" (itemAdded)="addItem($event)"></menu-item>
   `
 })
 class MenusComponent {
   restaurantMenu: RestaurantMenu;
+  @Output(`itemReceivedFromMenu`) emitter: EventEmitter<Item> = new EventEmitter<Item>();
 
   constructor() {
     // @ts-ignore
     this.restaurantMenu = menus.default;
   }
 
+  addItem(item: Item) {
+    this.emitter.emit(item);
+  }
+
 }
 
+/* ***********
+ *
+ * Restaurant Component
+ *
+ ************** */
 @Component({
   selector: 'restaurant',
   template: `
@@ -260,7 +317,6 @@ class MenusComponent {
       <li>{{restaurant.location.country}}</li>
       <li>Website: <a [href]="restaurant.raw_hero_url">Click to go to Website</a></li>
     </ul>
-    <menus></menus>
   `
 })
 class RestaurantComponent {
@@ -276,6 +332,7 @@ class RestaurantComponent {
   selector: 'app',
   template: `
     <restaurant></restaurant>
+    <order-list></order-list>
   `
 })
 class AppComponent {
@@ -287,7 +344,9 @@ class AppComponent {
     AppComponent,
     RestaurantComponent,
     MenusComponent,
-    MenuItemComponent
+    MenuItemComponent,
+    OrderListComponent,
+    OrderComponent
   ],
   bootstrap: [AppComponent]
 })
