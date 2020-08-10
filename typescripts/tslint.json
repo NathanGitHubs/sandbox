@@ -179,6 +179,5 @@
     "ordered-imports": [false]
   },
   "rulesDirectory": [
-    "codelyzer"
   ]
 }

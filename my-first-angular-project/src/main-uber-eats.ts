@@ -107,51 +107,51 @@ export type Item = {
 
 export type DisplayOptions = {
   disable_item_instructions: boolean;
-}
+};
 
 export type TimePeriod = {
   start_time: string;
   end_time: string;
-}
+};
 
 export type ServiceAvailability = {
   time_periods: TimePeriod[];
   day_of_week: string;
-}
+};
 
 export type Translations3 = {
   en_us: string;
-}
+};
 
 export type Title2 = {
   translations: Translations3;
-}
+};
 
 export type Menu = {
   service_availability: ServiceAvailability[];
   category_ids: string[];
   id: string;
   title: Title2;
-}
+};
 
 export type Entity = {
   type: string;
   id: string;
-}
+};
 
 export type Translations4 = {
   en_us: string;
-}
+};
 
 export type Title3 = {
   translations: Translations4;
-}
+};
 
 export type Category = {
   entities: Entity[];
   id: string;
   title: Title3;
-}
+};
 
 export type Quantity3 = {
   max_permitted: number;
@@ -159,25 +159,25 @@ export type Quantity3 = {
   default_quantity?: any;
   charge_above?: any;
   refund_under?: any;
-}
+};
 
 export type QuantityInfo2 = {
   overrides: any[];
   quantity: Quantity3;
-}
+};
 
 export type Translations5 = {
   en_us: string;
-}
+};
 
 export type Title4 = {
   translations: Translations5;
-}
+};
 
 export type ModifierOption = {
   type: string;
   id: string;
-}
+};
 
 export type ModifierGroup = {
   quantity_info: QuantityInfo2;
@@ -186,7 +186,7 @@ export type ModifierGroup = {
   modifier_options: ModifierOption[];
   display_type?: any;
   id: string;
-}
+};
 
 export type RestaurantMenu = {
   items: Item[];
@@ -194,22 +194,23 @@ export type RestaurantMenu = {
   menus: Menu[];
   categories: Category[];
   modifier_groups: ModifierGroup[];
-}
+};
 
 export type OrderedItem = Item & {
   quantity: number;
-}
+};
 
 @Component({
   selector: 'order',
   template: `
-    <p>{{data.quantity}}x {{data.title.translations.en_us}} {{dollarSign}}{{data.price_info.price / 100}} {{"\u00A0"}}
-      <button (click)="increaseQuantity(data)">+</button>
+    <div class="card card-block">{{data.quantity}}
+      x {{data.title.translations.en_us}} {{dollarSign}}{{data.price_info.price / 100}} {{"\u00A0"}}
+      <button (click)="increaseQuantity(data)" class="btn btn-primary">+</button>
       {{"\u00A0"}}
-      <button (click)="decreaseQuantity(data)">-</button>
+      <button (click)="decreaseQuantity(data)" class="btn btn-secondary">-</button>
       {{"\u00A0"}}
-      <button (click)="deleteOrderedItem(data)">Delete</button>
-    </p>
+      <button (click)="deleteOrderedItem(data)" class="btn btn-warning">Delete</button>
+    </div>
   `
 })
 class OrderComponent {
@@ -271,7 +272,7 @@ class OrderListComponent {
     return values;
   }
 
-  increaseQuantity(item: OrderedItem) {
+  increaseQuantity(item: OrderedItem): void {
     console.log(item);
     this.incrementQuantity.emit(item);
   }
@@ -281,7 +282,7 @@ class OrderListComponent {
     this.decrementQuantity.emit(item);
   }
 
-  deleteOrderedItem(item: OrderedItem) {
+  deleteOrderedItem(item: OrderedItem): void {
     console.log(item);
     this.removeOrderedItem.emit(item);
   }
@@ -297,7 +298,7 @@ class OrderListComponent {
   template: `
     <img [src]="item.image_url" [alt]="item.title.translations.en_us" [ngClass]="checkIfFalsey(item)">
     <p>{{item.title.translations.en_us}} {{dollarSign}}{{item.price_info.price / 100}}</p>
-    <button (click)="addItem(item)">Add to Order</button>
+    <button (click)="addItem(item)" class="btn-primary">Add to Order</button>
     <hr/>
   `
 })
@@ -467,5 +468,4 @@ class AppComponent {
 export class AppModule {
 }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule);
