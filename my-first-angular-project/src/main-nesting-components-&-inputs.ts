@@ -16,7 +16,7 @@ class Joke {
     this.message = 'Tell Me';
   }
 
-  toggle() {
+  toggle(): void {
     this.hide = !this.hide;
     if (!this.hide) {
       this.message = 'Hide Me';
@@ -27,7 +27,7 @@ class Joke {
 }
 
 @Component({
-  selector: 'joke',
+  selector: 'app-joke',
   template: `
     <div class="card card-block">
       <h4 class="card-title">{{data.setup}}</h4>
@@ -43,9 +43,9 @@ class JokeComponent {
 }
 
 @Component({
-  selector: 'joke-list',
+  selector: 'app-joke-list',
   template: `
-    <joke *ngFor="let j of jokes" [joke]="j"></joke>
+    <app-joke *ngFor="let j of jokes" [joke]="j"></app-joke>
   `
 })
 class JokeListComponent {
@@ -61,9 +61,9 @@ class JokeListComponent {
 }
 
 @Component({
-  selector: 'app',
+  selector: 'app-main',
   template: `
-    <joke-list></joke-list>
+    <app-joke-list></app-joke-list>
   `
 })
 class AppComponent {
@@ -81,5 +81,4 @@ class AppComponent {
 export class AppModule {
 }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule);

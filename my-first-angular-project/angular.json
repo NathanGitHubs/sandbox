@@ -15,7 +15,7 @@
           "options": {
             "outputPath": "dist/my-first-angular-project",
             "index": "src/index.html",
-            "main": "src/main-uber-eats.ts",
+            "main": "src/main-lifecycle-hooks.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
@@ -119,6 +119,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "my-first-angular-project"
 }

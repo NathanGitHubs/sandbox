@@ -16,7 +16,7 @@ export class Joke {
     this.message = 'Tell Me';
   }
 
-  toggle() {
+  toggle(): void {
     this.hide = !this.hide;
     if (!this.hide) {
       this.message = 'Hide Me';
@@ -27,7 +27,7 @@ export class Joke {
 }
 
 @Component({
-  selector: 'joke-list',
+  selector: 'app-joke-list',
   template: `
     <div class="card card-block" *ngFor="let joke of jokes">
       <h4 class="card-title">{{joke.setup}}</h4>
@@ -56,5 +56,4 @@ class JokeListComponent {
 export class AppModule {
 }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule).then();

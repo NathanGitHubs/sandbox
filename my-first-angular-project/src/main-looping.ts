@@ -6,10 +6,10 @@ import {Component}              from '@angular/core';
 type Joke = {
   setup: string,
   punchline: string
-}
+};
 
 @Component({
-  selector: 'joke-list',
+  selector: 'app-joke-list',
   template: `
     <div class="card card-block" *ngFor="let joke of jokes">
       <h4 class="card-title">{{joke.setup}}</h4>
@@ -46,5 +46,4 @@ class JokeListComponent {
 export class AppModule {
 }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule).then();

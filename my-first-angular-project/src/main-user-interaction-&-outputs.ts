@@ -21,13 +21,13 @@ class Joke {
     this.hide = true;
   }
 
-  toggle() {
+  toggle(): void {
     this.hide = !this.hide;
   }
 }
 
 @Component({
-  selector: 'joke-form',
+  selector: 'app-joke-form',
   template: `
     <div class="card card-block">
       <h4 class="card-title">Create Joke</h4>
@@ -53,14 +53,14 @@ class Joke {
 class JokeFormComponent {
   @Output('jokeCreated') emitter: EventEmitter<Joke> = new EventEmitter<Joke>();
 
-  createJoke(setup: string, punchline: string) {
-    const joke = new Joke(setup, punchline)
+  createJoke(setup: string, punchline: string): void {
+    const joke: Joke = new Joke(setup, punchline);
     this.emitter.emit(joke);
   }
 }
 
 @Component({
-  selector: 'joke',
+  selector: 'app-joke',
   template: `
     <div class="card card-block">
       <h4 class="card-title">{{data.setup}}</h4>
@@ -76,7 +76,7 @@ class JokeComponent {
   // @ts-ignore
   @Input('joke') data: Joke;
 
-  hideIfPunchlineEmpty() {
+  hideIfPunchlineEmpty(): string {
     if (!this.data.punchline) {
       return 'invisible';
     } else {
@@ -84,7 +84,7 @@ class JokeComponent {
     }
   }
 
-  tell() {
+  tell(): string {
     if (!this.data.hide) {
       return 'Hide';
     } else {
@@ -94,10 +94,10 @@ class JokeComponent {
 }
 
 @Component({
-  selector: 'joke-list',
+  selector: 'app-joke-list',
   template: `
-    <joke-form (jokeCreated)="addJoke($event)"></joke-form>
-    <joke *ngFor="let j of jokes" [joke]="j"></joke>
+    <app-joke-form (jokeCreated)="addJoke($event)"></app-joke-form>
+    <app-joke *ngFor="let j of jokes" [joke]="j"></app-joke>
   `
 })
 class JokeListComponent {
@@ -120,7 +120,7 @@ class JokeListComponent {
     ];
   }
 
-  addJoke(joke: Joke) {
+  addJoke(joke: Joke): void {
     // this.jokes.unshift(joke);
     this.jokes.push(joke);
 
@@ -128,9 +128,9 @@ class JokeListComponent {
 }
 
 @Component({
-  selector: 'app',
+  selector: 'app-main',
   template: `
-    <joke-list></joke-list>
+    <app-joke-list></app-joke-list>
   `
 })
 class AppComponent {
@@ -149,5 +149,4 @@ class AppComponent {
 export class AppModule {
 }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule).then();

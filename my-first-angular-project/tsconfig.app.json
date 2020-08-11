@@ -16,6 +16,9 @@
     "src/main-user-interaction-&-outputs.ts",
     "src/main-pokemon-app.ts",
     "src/main-uber-eats.ts",
+    "src/main-templates-styles-&-view-encapsulation/main-templates-styles-&-view-encapsulation.ts",
+    "src/main-content-projection/main-content-projection.ts",
+    "src/main-lifecycle-hooks.ts",
     "src/polyfills.ts"
   ],
   "include": [

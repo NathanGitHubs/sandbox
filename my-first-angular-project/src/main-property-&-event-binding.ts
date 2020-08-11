@@ -7,10 +7,10 @@ type Joke = {
   setup: string,
   punchline: string,
   hide: boolean
-}
+};
 
 @Component({
-  selector: 'joke-list',
+  selector: 'app-joke-list',
   template: `
     <div class="card card-block" *ngFor="let joke of jokes">
       <h4 class="card-title">{{joke.setup}}</h4>
@@ -44,10 +44,10 @@ class JokeListComponent {
     this.message = 'Tell Me';
   }
 
-  toggle(joke: any) {
+  toggle(joke: any): void {
     joke.hide = !joke.hide;
-    if(joke.hide === false){
-      this.message = 'Hide Me'
+    if (!joke.hide) {
+      this.message = 'Hide Me';
     } else {
       this.message = 'Tell Me';
     }
@@ -70,5 +70,4 @@ class JokeListComponent {
 export class AppModule {
 }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule).then();

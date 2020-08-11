@@ -15,7 +15,7 @@ export type Location = {
   state: string;
   latitude: number;
   longitude: number;
-}
+};
 
 export type Restaurant = {
   name: string;
@@ -26,28 +26,28 @@ export type Restaurant = {
   price_bucket: string;
   avg_prep_time: number;
   status: string;
-}
+};
 
 export type Translations = {
   en_us: string;
-}
+};
 
 export type Description = {
   translations: Translations;
-}
+};
 
 export type Translations2 = {
   en_us: string;
-}
+};
 
 export type Title = {
   translations: Translations2;
-}
+};
 
 export type NutritionalInfo = {
   kilojoules?: any;
   calories?: any;
-}
+};
 
 export type Quantity = {
   max_permitted: number;
@@ -55,41 +55,41 @@ export type Quantity = {
   default_quantity?: any;
   charge_above?: any;
   refund_under?: any;
-}
+};
 
 export type Override = {
   context_type: string;
   context_value: string;
   quantity: Quantity;
-}
+};
 
-export type Quantity2 = {}
+export type Quantity2 = {};
 
 export type QuantityInfo = {
   overrides: Override[];
   quantity: Quantity2;
-}
+};
 
 export type ModifierGroupIds = {
   overrides: any[];
   ids: string[];
-}
+};
 
 export type Override2 = {
   context_type: string;
   context_value: string;
   price: number;
-}
+};
 
 export type PriceInfo = {
   price: number;
   overrides: Override2[];
-}
+};
 
 export type TaxInfo = {
   tax_rate?: any;
   vat_rate_percentage?: any;
-}
+};
 
 export type Item = {
   description: Description;
@@ -103,7 +103,7 @@ export type Item = {
   price_info: PriceInfo;
   tax_info: TaxInfo;
   id: string;
-}
+};
 
 export type DisplayOptions = {
   disable_item_instructions: boolean;
@@ -201,7 +201,7 @@ export type OrderedItem = Item & {
 };
 
 @Component({
-  selector: 'order',
+  selector: 'app-order',
   template: `
     <div class="card card-block">{{data.quantity}}
       x {{data.title.translations.en_us}} {{dollarSign}}{{data.price_info.price / 100}} {{"\u00A0"}}
@@ -237,20 +237,20 @@ class OrderComponent {
     this.decrementQuantity.emit(item);
   }
 
-  deleteOrderedItem(item: OrderedItem) {
+  deleteOrderedItem(item: OrderedItem): void {
     this.removeOrderedItem.emit(item);
   }
 }
 
 @Component({
-  selector: 'order-list',
+  selector: 'app-order-list',
   template: `
     <h1>My Order</h1>
-    <order *ngFor="let item of mapToArray(myItems)" [orderedItem]="item"
-           (incrementQuantity)="increaseQuantity($event)"
-           (decrementQuantity)="decreaseQuantity($event)"
-           (removeOrderedItem)="deleteOrderedItem($event)"
-    ></order>
+    <app-order *ngFor="let item of mapToArray(myItems)" [orderedItem]="item"
+               (incrementQuantity)="increaseQuantity($event)"
+               (decrementQuantity)="decreaseQuantity($event)"
+               (removeOrderedItem)="deleteOrderedItem($event)"
+    ></app-order>
   `
 })
 class OrderListComponent {
@@ -294,7 +294,7 @@ class OrderListComponent {
  *
  ************** */
 @Component({
-  selector: 'menu-item',
+  selector: 'app-menu-item',
   template: `
     <img [src]="item.image_url" [alt]="item.title.translations.en_us" [ngClass]="checkIfFalsey(item)">
     <p>{{item.title.translations.en_us}} {{dollarSign}}{{item.price_info.price / 100}}</p>
@@ -323,7 +323,7 @@ class MenuItemComponent {
 
   }
 
-  addItem(item: Item) {
+  addItem(item: Item): void {
     this.emitter.emit(item);
   }
 }
@@ -334,10 +334,11 @@ class MenuItemComponent {
  *
  ************** */
 @Component({
-  selector: 'menus',
+  selector: 'app-menus',
   template: `
     <h1>Menu Items</h1>
-    <menu-item *ngFor="let item of restaurantMenu.items" [menuItem]="item" (itemAdded)="addItem($event)"></menu-item>
+    <app-menu-item *ngFor="let item of restaurantMenu.items" [menuItem]="item"
+                   (itemAdded)="addItem($event)"></app-menu-item>
   `
 })
 class MenusComponent {
@@ -345,7 +346,7 @@ class MenusComponent {
   @Input('restaurantMenu') restaurantMenu: RestaurantMenu;
   @Output(`itemReceivedFromMenu`) emitter: EventEmitter<Item> = new EventEmitter<Item>();
 
-  addItem(item: Item) {
+  addItem(item: Item): void {
     this.emitter.emit(item);
   }
 
@@ -357,7 +358,7 @@ class MenusComponent {
  *
  ************** */
 @Component({
-  selector: 'restaurant',
+  selector: 'app-restaurant',
   template: `
     <h1>{{restaurant.name}}</h1>
     <ul>
@@ -379,15 +380,15 @@ class RestaurantComponent {
 }
 
 @Component({
-  selector: 'orchestrator',
+  selector: 'app-orchestrator',
   template: `
-    <restaurant></restaurant>
-    <order-list [myItems]="myItems"
-                (incrementQuantity)="increaseQuantityFromOrder($event)"
-                (decrementQuantity)="decreaseQuantityFromOrder($event)"
-                (removeOrderedItem)="removeFromOrder($event)"
-    ></order-list>
-    <menus [restaurantMenu]="restaurantMenu" (itemReceivedFromMenu)="addToOrder($event)"></menus>
+    <app-restaurant></app-restaurant>
+    <app-order-list [myItems]="myItems"
+                    (incrementQuantity)="increaseQuantityFromOrder($event)"
+                    (decrementQuantity)="decreaseQuantityFromOrder($event)"
+                    (removeOrderedItem)="removeFromOrder($event)"
+    ></app-order-list>
+    <app-menus [restaurantMenu]="restaurantMenu" (itemReceivedFromMenu)="addToOrder($event)"></app-menus>
   `
 })
 class OrchestratorComponent {
@@ -401,7 +402,7 @@ class OrchestratorComponent {
   }
 
   addToOrder(item: Item): void {
-    const orderedItem: OrderedItem = this.myItems.get(item.id)!;
+    const orderedItem: OrderedItem | undefined = this.myItems.get(item.id);
     if (orderedItem) {
       orderedItem.quantity++;
     } else {
@@ -414,14 +415,14 @@ class OrchestratorComponent {
   }
 
   removeFromOrder(item: OrderedItem): void {
-    const orderedItem: OrderedItem = this.myItems.get(item.id)!;
+    const orderedItem: OrderedItem | undefined = this.myItems.get(item.id);
     if (orderedItem) {
       this.myItems.delete(orderedItem.id);
     }
   }
 
   decreaseQuantityFromOrder(item: OrderedItem): void {
-    const orderedItem: OrderedItem = this.myItems.get(item.id)!;
+    const orderedItem: OrderedItem | undefined = this.myItems.get(item.id);
     if (orderedItem) {
       orderedItem.quantity--;
       if (orderedItem.quantity <= 0) {
@@ -431,22 +432,22 @@ class OrchestratorComponent {
   }
 
   increaseQuantityFromOrder(item: OrderedItem): void {
-    const orderedItem: OrderedItem = this.myItems.get(item.id)!;
+    const orderedItem: OrderedItem | undefined = this.myItems.get(item.id);
     if (orderedItem) {
       orderedItem.quantity++;
       if (orderedItem.quantity <= 0) {
         this.myItems.delete(orderedItem.id);
       }
     } else {
-      this.addToOrder(orderedItem);
+      this.addToOrder(item);
     }
   }
 }
 
 @Component({
-  selector: 'app',
+  selector: 'app-main',
   template: `
-    <orchestrator></orchestrator>
+    <app-orchestrator></app-orchestrator>
   `
 })
 class AppComponent {
@@ -468,4 +469,4 @@ class AppComponent {
 export class AppModule {
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule).then();
