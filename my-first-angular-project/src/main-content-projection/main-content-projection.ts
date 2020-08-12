@@ -20,7 +20,7 @@ class Joke {
 
 
 @Component({
-  selector: 'joke-form',
+  selector: 'app-joke-form',
   templateUrl: './joke-form-component.html',
   styleUrls: [
     './joke-form-component.css'
@@ -38,7 +38,7 @@ class JokeFormComponent {
 }
 
 @Component({
-  selector: 'joke',
+  selector: 'app-joke',
   template: `
 <div class='card card-block'>
   <h4 class='card-title'>
@@ -60,7 +60,7 @@ class JokeComponent {
 }
 
 @Component({
-  selector: 'joke-list',
+  selector: 'app-joke-list',
   template: `
     <app-joke-form (jokeCreated)='addJoke($event)'></app-joke-form>
     <app-joke *ngFor='let j of jokes' [joke]='j'>
@@ -87,7 +87,7 @@ class JokeListComponent {
 
 
 @Component({
-  selector: 'app',
+  selector: 'app-main',
   template: `
     <app-joke-list></app-joke-list>
   `
