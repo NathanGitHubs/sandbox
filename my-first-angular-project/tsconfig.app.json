@@ -22,6 +22,7 @@
     "src/main-viewchildren-&-contentchildren.ts",
     "src/main-ngfor.ts",
     "src/main-ngif-&-ngswitch.ts",
+    "src/main-ngstyle-&-ngclass.ts",
     "src/polyfills.ts"
   ],
   "include": [
