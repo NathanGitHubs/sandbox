@@ -176,7 +176,8 @@
     ],
     "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
     "object-literal-sort-keys": false,
-    "ordered-imports": [false]
+    "ordered-imports": [false],
+    "interface-name": [true, "never-prefix"]
   },
   "rulesDirectory": [
     "codelyzer"

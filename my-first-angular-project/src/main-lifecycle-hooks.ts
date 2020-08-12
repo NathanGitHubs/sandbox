@@ -74,7 +74,10 @@ class JokeComponent
 
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
-        console.log(`${key} changed.Current: ${changes[key].currentValue}.Previous: ${changes[key].previousValue}`);
+        console.log(`${key} changed.
+            Current: ${changes[key].currentValue}.
+            Previous: ${changes[key].previousValue}
+            `);
       }
     }
   }
