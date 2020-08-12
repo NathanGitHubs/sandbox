@@ -20,6 +20,7 @@
     "src/main-content-projection/main-content-projection.ts",
     "src/main-lifecycle-hooks.ts",
     "src/main-viewchildren-&-contentchildren.ts",
+    "src/main-ngfor.ts",
     "src/polyfills.ts"
   ],
   "include": [
