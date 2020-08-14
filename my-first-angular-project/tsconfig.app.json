@@ -23,6 +23,8 @@
     "src/main-ngfor.ts",
     "src/main-ngif-&-ngswitch.ts",
     "src/main-ngstyle-&-ngclass.ts",
+    "src/main-ngnonbindable.ts",
+    "src/main-structural-directives.ts",
     "src/polyfills.ts"
   ],
   "include": [
