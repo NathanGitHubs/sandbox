@@ -25,6 +25,7 @@
     "src/main-ngstyle-&-ngclass.ts",
     "src/main-ngnonbindable.ts",
     "src/main-structural-directives.ts",
+    "src/main-creating-a-custom-directive.ts",
     "src/polyfills.ts"
   ],
   "include": [
