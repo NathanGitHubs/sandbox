@@ -29,6 +29,7 @@
     "src/main-hostlistener-&-hostbinding.ts",
     "src/main-inputs-&-configuration.ts",
     "src/main-observables-&-rxjs.ts",
+    "src/main-rxjs-&-angular.ts",
     "src/polyfills.ts"
   ],
   "include": [
