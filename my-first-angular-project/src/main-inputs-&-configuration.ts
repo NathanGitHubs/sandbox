@@ -7,11 +7,16 @@ import {
   HostBinding,
   ElementRef,
   NgModule,
-  Input,
+  Input
   // Output,
   // EventEmitter
 }                               from '@angular/core';
 import {BrowserModule}          from '@angular/platform-browser';
+import * as ts                  from 'typescript';
+
+interface MyInterface {
+  [name: string]: any;
+}
 
 class Joke {
   public setup: string;
@@ -40,6 +45,10 @@ class CardHoverDirective {
     querySelector: '.card-text'
   };
 
+  @Input('appendedClass') appendedClass: MyInterface = {
+    class4: true
+  };
+
   constructor(private el: ElementRef,
               private renderer: Renderer2) {
     // renderer.setElementStyle(el.nativeElement, 'backgroundColor', 'gray');
@@ -49,6 +58,21 @@ class CardHoverDirective {
     const part: any = this.el.nativeElement.querySelector(this.config.querySelector);
     this.renderer.setStyle(part, 'display', 'block');
     this.isHovering = true;
+    // console.log(JSON.stringify(this.appendedClass));
+    Object.keys(this.appendedClass).forEach((key: string): void => {
+      const value: any = this.appendedClass[key];
+      console.log(key, value);
+
+      // const adfsdf: any = '{Run: (data: string)}';
+
+      const result: any = ts.transpile(value);
+      // tslint:disable-next-line:no-eval
+      const runnable: any = eval(result);
+      if (runnable) {
+        // TODO add key to class name
+        this.renderer.addClass(this.el.nativeElement, key);
+      }
+    });
   }
 
   @HostListener('mouseout') onMouseOut(): void {
@@ -62,6 +86,9 @@ class CardHoverDirective {
   selector: 'app-joke',
   template: `
     <div class="card card-block"
+         [class.class2]="true"
+         [class]="{'class3': true}"
+         [appendedClass]="{'whoAmI': true}"
          [ccCardHover]="{querySelector:'p'}">
       <h4 class="card-title">{{data?.setup}}</h4>
       <p class="card-text"

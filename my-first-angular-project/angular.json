@@ -15,7 +15,7 @@
           "options": {
             "outputPath": "dist/my-first-angular-project",
             "index": "src/index.html",
-            "main": "src/main-inputs-&-configuration.ts",
+            "main": "src/main-observables-&-rxjs.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
