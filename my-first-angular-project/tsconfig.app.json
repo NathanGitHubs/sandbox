@@ -27,6 +27,7 @@
     "src/main-structural-directives.ts",
     "src/main-creating-a-custom-directive.ts",
     "src/main-hostlistener-&-hostbinding.ts",
+    "src/main-inputs-&-configuration.ts",
     "src/polyfills.ts"
   ],
   "include": [
