@@ -8,27 +8,28 @@ import {
   Validators,
   FormBuilder
 }                               from '@angular/forms';
-// import {map, filter}            from 'rxjs/operators';
+import {filter, map}                 from 'rxjs/operators';
 
 @Component({
   selector: 'app-form',
   template: `
-    <form [formGroup]="form"
+    <form [formGroup]="myForm"
           (ngSubmit)="onSubmit()">
 
       <!-- Output comment -->
       <div class="card card-block">
-        <pre class="card-text">{{ form.value.comment }}</pre>
+        <pre class="card-text">{{ myForm.value["commentInForm"] }}</pre>
       </div>
-      <p class="small">{{ form.value.lastUpdateTS }}</p>
+      <p class="small">{{ myForm.value["lastUpdateTS"] }}</p>
       <!-- Comment text area -->
       <div class="form-group">
         <label for="comment">Comment</label>
         <textarea class="form-control"
-                  formControlName="comment"
-                  rows="3"></textarea>
+                  formControlName="commentInForm"
+                  rows="5"
+                  placeholder="Enter comment"></textarea>
         <small class="form-text text-muted">
-          <span>{{ 100 - form.value.comment.length }}</span> characters left
+          <span>{{ 100 - myForm.value["commentInForm"].length }}</span> characters left
         </small>
       </div>
       <!-- Name input -->
@@ -36,7 +37,7 @@ import {
         <label for="name">Name</label>
         <input type="text"
                class="form-control"
-               formControlName="name"
+               formControlName="nameInForm"
                placeholder="Enter name">
       </div>
       <!-- Email input -->
@@ -44,7 +45,7 @@ import {
         <label for="email">Email address</label>
         <input type="email"
                class="form-control"
-               formControlName="email"
+               formControlName="emailInForm"
                placeholder="Enter email">
         <small class="form-text text-muted">
           We'll never share your email with anyone else.
@@ -52,15 +53,15 @@ import {
       </div>
       <button type="submit"
               class="btn btn-primary"
-              [disabled]="!form.valid">Submit
+              [disabled]="!myForm.valid">Submit
       </button>
     </form>
   `
 })
 class FormAppComponent {
-  form: FormGroup;
+  myForm: FormGroup;
   comment: FormControl = new FormControl('', Validators.required);
-  name: FormControl = new FormControl('', Validators.required);
+  myName: FormControl = new FormControl('', Validators.required);
   email: FormControl = new FormControl('', [
     Validators.required,
     Validators.pattern('[^ @]*@[^ @]*')
@@ -89,17 +90,22 @@ class FormAppComponent {
   // }
   /* None Observable Solution */
   constructor(fb: FormBuilder) {
-    this.form = fb.group({
-      comment: this.comment,
-      name: this.name,
-      email: this.email
+    this.myForm = fb.group({
+      commentInForm: this.comment,
+      nameInForm: this.myName,
+      emailInForm: this.email
     });
-    this.form.valueChanges.subscribe((data: any): void => {
-      if (this.form.valid) {
-        data.comment = data.comment.replace(/<(?:.|\n)*?>/gm, '');
-        data.lastUpdateTS = new Date();
-        console.log(JSON.stringify(data));
-      }
+    // @ts-ignore
+    this.myForm.valueChanges.pipe(filter((data: any): boolean => {
+      return this.myForm.valid;
+    })).pipe(map((data: any): any => {
+      data.commentInForm = data.commentInForm.replace(/<(?:.|\n)*?>/gm, '');
+      return data;
+    })).subscribe((data: any): void => {
+      // if (this.myForm.valid) {
+      data.lastUpdateTS = new Date();
+      console.log(JSON.stringify(data));
+      // }
     });
   }
 
