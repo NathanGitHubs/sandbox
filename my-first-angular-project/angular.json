@@ -15,7 +15,7 @@
           "options": {
             "outputPath": "dist/my-first-angular-project",
             "index": "src/index.html",
-            "main": "src/main-async-pipe.ts",
+            "main": "src/main-model-driven-forms.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
