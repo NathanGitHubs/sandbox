@@ -30,6 +30,8 @@
     "src/main-inputs-&-configuration.ts",
     "src/main-observables-&-rxjs.ts",
     "src/main-rxjs-&-angular.ts",
+    "src/main-built-in-pipes.ts",
+    "src/main-async-pipe.ts",
     "src/polyfills.ts"
   ],
   "include": [
